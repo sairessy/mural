@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="assets/img/m.png">
+    <title>Mural</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="css/global.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #fcfcfc;
+        }
+
+        section {
+            background-color: #fff;
+            width: 75%;
+            margin: auto;
+            box-shadow: 0 0 4px 4px #eee;
+            min-height: 100vh;
+        }
+
+        #header {
+			box-shadow: inset 0 -1px 1px #ddd;
+            display: flex;
+            align-items: center;
+            height: 60px;
+            margin-bottom: 10px;
+            padding: 10px;
+            justify-content: space-between;
+        }
+
+        #header nav a {
+            margin-left: 10px;
+        }
+
+				#a-login {
+					padding: 12px;
+					border: 1px solid #ddd;
+					border-radius: 5px;
+					display: inline-block;
+					width: 140px;
+					text-align: center;
+				}
+
+				#form-search {
+					flex: 1;
+				}
+
+				#inp-search-vitrola {
+					display: inline-block;
+					width: 60%;
+					margin-left: 20px;
+					padding: 12px;
+					font-size: 14px;
+					outline: none;
+					bottom: none;
+					border: 1px solid #ddd;
+					background: url(assets/img/search-solid.svg) no-repeat 10px center/20px;
+					background-color: #fff;
+					border-radius: 5px;
+					padding-left: 40px;
+				}
+
+        #main {
+            padding: 15px;
+        }
+
+        .vitrola {
+            padding: 5px 20px;
+			margin-bottom: 20px;
+        }
+
+        .doc {
+            display: flex;
+            align-items: center;
+        }
+
+		.doc p {
+			margin-left: 20px;
+			margin-bottom: 20px;
+		}
+
+		h4 {
+			background-color: #eee;
+			box-shadow: inset 1px 1px 2px #ddd;
+			padding: 10px;
+			border-radius: 5px;
+			color: #666;
+			text-transform: uppercase;
+			display: flex;
+			align-items: center;
+
+		}
+
+		h4 i {
+			margin-right: 10px;
+		}
+
+        .doc-buttons {
+            margin-left: 10px;
+        }
+
+		@media screen and (max-width: 414px) {
+			section {
+				width: 100%;
+				box-shadow: none;
+			}
+
+			#form-search {
+				display: none;
+			}
+
+			#a-login {
+				width: auto;
+			}
+		}
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <div id="header">
+                <h1 class="app-title"><img width="40" height="40" src="assets/img/m.png" /><a href="/">MURAL</a></h1>
+				<form action="#" id="form-search">
+					<input type="text" placeholder="Pesquisar mural" id="inp-search-vitrola">
+				</form>
+                <nav>
+                    <a href="/login" id="a-login">Iniciar sessão</a>
+                </nav>
+            </div>
+
+            <div id="main">
+							<div id="vitrolas-all">
+								<div id="vitrolas"></div>
+            </div> 
+        </section>
+    </main>
+</body>
+
+<script>
+    getVitrolas();
+    async function getVitrolas() {
+        const resp = await fetch('/vitrolas');
+        const json = await resp.json();
+        console.log(json);
+				let vitrolas = ''
+
+				json.forEach(v => {
+					let docs = '';
+
+					if(v.docs.length > 0) {
+						for (let i = 0; i < v.docs.length; i++) {
+							const d = v.docs[i];
+							if(!d.removed) {
+								docs += 
+								`<div class="doc">
+										<p><a target="_blank" href="/doc/${d.time}"><i class="la la-file-pdf"></i> ${d.title}</a></p>
+										<div class="doc-buttons">
+										</div>
+									</div>
+								`;
+							}
+						}
+					}
+
+					vitrolas += 
+					`
+						<h4>${v.name} - ${v.userOffice}</h4>
+						<div class="vitrola">
+							${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
+						</div>
+					`;
+
+					document.getElementById('vitrolas').innerHTML = vitrolas;
+				});
+    }
+
+</script>
+</html>

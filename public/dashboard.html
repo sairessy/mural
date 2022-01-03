@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mural - Dashboard</title>
+	<link rel="icon" href="assets/img/m.png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="css/global.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #fcfcfc;
+        }
+
+		form {
+			padding: 10px;
+			margin: 20px 0;
+			border: 1px solid #eee;
+			border-radius: 3px;
+		}
+
+        section {
+            background-color: #fff;
+            width: 75%;
+            margin: auto;
+            box-shadow: 0 0 4px 4px #eee;
+            min-height: 100vh;
+        }
+
+        #header {
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            height: 60px;
+            margin-bottom: 10px;
+            padding: 10px;
+            justify-content: space-between;
+        }
+
+        #header nav a {
+			padding: 12px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+            margin-left: 10px;
+			display: inline-block;
+			width: 140px;
+			text-align: center;
+        }
+
+        #main {
+            padding: 15px;
+        }
+
+        .vitrola {
+            padding: 5px 20px;
+        }
+
+		h4 {
+			background-color: #eee;
+			box-shadow: inset 1px 1px 2px #ddd;
+			padding: 10px;
+			border-radius: 5px;
+			text-transform: uppercase;
+		}
+
+        .doc {
+            display: flex;
+            align-items: center;
+			margin-bottom: 10px;
+        }
+
+		.doc i {
+			margin-right: 10px;
+		}
+
+        .doc-buttons {
+            margin-left: 10px;
+        }
+
+		/*  */
+		input[type="submit"] {
+			background-color: indigo;
+		}
+
+		@media screen and (max-width: 414px) {
+			section {
+				width: 100%;
+				box-shadow: none;
+			}
+
+			#header nav a {
+				width: auto;
+			}
+		}
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <div id="header">
+                <h1 class="app-title"><img width="40" height="40" src="assets/img/m.png" /><a href="/">MURAL</a></h1>
+                <nav>
+                    <!-- <a href="">Editar perfil</a> -->
+                    <a href="/logout">Terminar secção</a>
+                </nav>
+            </div>
+
+            <div id="main">
+				<form id="form-add-vitrola">
+					<input type="text" id="inp-vitrola" placeholder="Nome do mural">
+					<button class="btn-submit">Adicionar mural</button>
+				</form>
+
+				<div id="vitrolas-all">
+				<div id="vitrolas"></div>
+            </div> 
+        </section>
+    </main>
+</body>
+
+<script>
+    document.getElementById('form-add-vitrola').addEventListener('submit', async e => {
+			e.preventDefault();
+			const name = document.getElementById('inp-vitrola').value;
+			const data = {name};
+			
+			const response = await fetch('/addvitrola', {
+				method: 'POST',
+				headers: {
+					"Content-Type": 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+
+			const json = await response.json();
+			alert('Mural adicionado com sucesso!');
+			window.location.href = '/dashboard';
+    });
+
+    getVitrolas();
+    async function getVitrolas() {
+        const resp = await fetch('/uservitrolas');
+        const json = await resp.json();
+			if(json.length > 0) {
+				let vitrolas = ''
+
+				json.forEach(v => {
+					let docs = '';
+
+					if(v.docs.length > 0) {
+						for (let i = 0; i < v.docs.length; i++) {
+							const d = v.docs[i];
+							if(!d.removed) {
+								docs += 
+								`<div class="doc">
+										<p><i class="la la-file-pdf"></i><a href="/doc/${d.time}">${d.title}</a></p>
+										<div class="doc-buttons">
+											<button onClick="removeDoc('${d.time}', '${v._id}');"><i class="la la-times"></i>Remover documento</button>
+										</div>
+									</div>
+								`;
+							}
+						}
+					}
+
+					vitrolas += 
+					`
+						<h4>${v.name} <button onClick="removeVitrola('${v._id}');"><i class="la la-times"></i>Remover mural</button></h4>
+							<form action="#" class="form-add-doc" onSubmit="addDoc('${v.name}', '${v._id}');">
+								<input type="text" placeholder="Título do documento" id="${v._id}-inp-title">
+								<select id="${v._id}-select-doc-type">
+									<option value="">Tipo de documento</option>
+								</select>
+								<input type="file" id="${v._id}-file-doc">
+								<button class="btn-submit">Adicionar documento</button>
+							</form>
+						<div class="vitrola">
+							${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
+						</div>
+					`;
+
+					document.getElementById('vitrolas').innerHTML = vitrolas;
+				});
+			}
+    }
+
+		async function removeDoc(doc, vitrolaId) {
+			const data = {doc, vitrolaId};
+			const response = await fetch('/removedoc', {
+				method: 'POST',
+				headers: {
+					"Content-Type": 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+
+			const json = await response.json();
+			window.location.href = '/dashboard';
+		}
+
+		async function removeVitrola(vitrolaId) {
+			const data = {vitrolaId};
+			const response = await fetch('/removevitrola', {
+				method: 'POST',
+				headers: {
+					"Content-Type": 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+
+			const json = await response.json();
+			alert('Mural removido com sucesso!');
+		}
+
+		async function addDoc(name, vitrolaId) {
+			const title = document.getElementById(vitrolaId + '-inp-title').value;
+			const type = document.getElementById(vitrolaId + '-select-doc-type').value;
+			const files = document.getElementById(vitrolaId + '-file-doc').files;
+			
+			let base64 = '';
+
+			if(files.length == 0) {
+				alert('Não carregou nenhum ficheiro!');
+				return;
+			}
+
+			if(files.length > 0) {
+				base64 = await new Promise((resolve, reject) => {
+					const reader = new FileReader();
+					reader.readAsDataURL(files[0]);
+					reader.onload = () => resolve(reader.result);
+					reader.onerror = error => {reject(error), console.error(error)};
+				});
+			}
+
+			const data = {title, vitrolaId, type, 
+				file: files.length > 0 ? {
+					size: files[0].size,
+					ext: files[0].type.split('/')[1],
+					base64
+				} : null
+			};
+
+			const response = await fetch('/adddoc', {
+				method: 'POST',
+				headers: {
+					"Content-Type": 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+
+			const json = await response.json();
+			console.log(json);
+			window.location.href = '/dashboard';
+		}
+</script>
+</html>
