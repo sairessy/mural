@@ -12,7 +12,7 @@
         body {
             padding: 0;
             margin: 0;
-            background-color: #fcfcfc;
+            background-color: #f1f1f1;
         }
 
         section {
@@ -24,49 +24,70 @@
         }
 
         #header {
-			box-shadow: inset 0 -1px 1px #ddd;
+			/* box-shadow: inset 0 -1px 1px #ddd; */
+			box-shadow: 0 2px 4px 4px #eee;
             display: flex;
             align-items: center;
             height: 60px;
             margin-bottom: 10px;
             padding: 10px;
-            justify-content: space-between;
+            justify-content: space-between; 
         }
+
+		#header .search-container {
+			flex: 1;
+			display: flex;
+		}
+
+		#header .search-container button {
+			width: 200px;
+			padding: 12px;
+			margin-left: 10px;
+			background: url(assets/img/search-light.svg) no-repeat 30px center/25px;
+			background-color: #777;
+			border: none;
+			font-size: 14px;
+			border-radius: 5px;
+			color: #fff;
+			cursor: pointer;
+		}
 
         #header nav a {
             margin-left: 10px;
         }
 
-				#a-login {
-					padding: 12px;
-					border: 1px solid #ddd;
-					border-radius: 5px;
-					display: inline-block;
-					width: 140px;
-					text-align: center;
-				}
+		#a-login {
+			padding: 12px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			display: inline-block;
+			width: 140px;
+			text-align: center;
+			background-color: #fff;
+		}
 
-				#form-search {
-					flex: 1;
-				}
+		#form-search {
+			/* display: flex; */
+			display: none;
+		}
 
-				#inp-search-vitrola {
-					display: inline-block;
-					width: 60%;
-					margin-left: 20px;
-					padding: 12px;
-					font-size: 14px;
-					outline: none;
-					bottom: none;
-					border: 1px solid #ddd;
-					background: url(assets/img/search-solid.svg) no-repeat 10px center/20px;
-					background-color: #fff;
-					border-radius: 5px;
-					padding-left: 40px;
-				}
+		#inp-search-vitrola {
+			display: inline-block;
+			width: 100%;
+			margin-left: 20px;
+			padding: 12px;
+			font-size: 14px;
+			outline: none;
+			bottom: none;
+			border: 1px solid #ddd;
+			background: url(assets/img/search-solid.svg) no-repeat 10px center/20px;
+			background-color: #fff;
+			border-radius: 5px;
+			padding-left: 40px;
+		}
 
         #main {
-            padding: 15px;
+            padding: 15px 50px;
         }
 
         .vitrola {
@@ -82,22 +103,48 @@
 		.doc p {
 			margin-left: 20px;
 			margin-bottom: 20px;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.doc p a img {
+			margin-right: 10px;
+		}
+
+		.doc p a span {
+			text-decoration: underline;
+		}
+
+		.doc p a {
+			display: flex;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+
+		.doc p small {
+			color: #777;
+			margin-left: 30px;
 		}
 
 		h4 {
-			background-color: #eee;
-			box-shadow: inset 1px 1px 2px #ddd;
+			/* background-color: #eee;
+			box-shadow: inset 1px 1px 2px #ddd; */
+			background-color: #f9f9f9;
 			padding: 10px;
 			border-radius: 5px;
 			color: #666;
-			text-transform: uppercase;
 			display: flex;
 			align-items: center;
 
 		}
 
-		h4 i {
-			margin-right: 10px;
+		h4 p {
+			text-transform: uppercase;
+		}
+
+		h4 small {
+			margin-left: 10px;
+			color: #999;
 		}
 
         .doc-buttons {
@@ -110,12 +157,27 @@
 				box-shadow: none;
 			}
 
+			#header .search-container button {
+				width: fit-content;
+				padding: 12px;
+				margin-left: 10px;
+				background-color: #777;
+				border: none;
+				border-radius: 5px;
+				color: #fff;
+				cursor: pointer;
+			}
+
 			#form-search {
 				display: none;
 			}
 
 			#a-login {
-				width: auto;
+				width: fit-content;
+			}
+
+			#main {
+				padding: 10px;
 			}
 		}
     </style>
@@ -124,18 +186,22 @@
     <main>
         <section>
             <div id="header">
-                <h1 class="app-title"><img width="40" height="40" src="assets/img/m.png" /><a href="/">MURAL</a></h1>
-				<form action="#" id="form-search">
-					<input type="text" placeholder="Pesquisar mural" id="inp-search-vitrola">
-				</form>
+                <h1 class="app-title"><img width="30" height="30" src="assets/img/m.png" /><a href="/">MURAL</a></h1>
+				<div class="search-container">
+					<form action="#" id="form-search">
+						<input type="text" placeholder="Pesquisar" id="inp-search-vitrola">
+					</form>
+					<button id="btn-search-vitrola">Mural</button>
+				</div>
                 <nav>
-                    <a href="/login" id="a-login">Iniciar sessão</a>
+                    <a href="/login" id="a-login">Entrar</a>
                 </nav>
             </div>
 
             <div id="main">
-							<div id="vitrolas-all">
-								<div id="vitrolas"></div>
+				<div id="vitrolas-all">
+					<div id="vitrolas"></div>
+				</div>
             </div> 
         </section>
     </main>
@@ -146,38 +212,96 @@
     async function getVitrolas() {
         const resp = await fetch('/vitrolas');
         const json = await resp.json();
-        console.log(json);
-				let vitrolas = ''
+		let vitrolas = ''
 
-				json.forEach(v => {
-					let docs = '';
+		json.forEach(v => {
+			let docs = '';
 
-					if(v.docs.length > 0) {
-						for (let i = 0; i < v.docs.length; i++) {
-							const d = v.docs[i];
-							if(!d.removed) {
-								docs += 
-								`<div class="doc">
-										<p><a target="_blank" href="/doc/${d.time}"><i class="la la-file-pdf"></i> ${d.title}</a></p>
-										<div class="doc-buttons">
-										</div>
-									</div>
-								`;
-							}
-						}
+			if(v.docs.length > 0) {
+				for (let i = 0; i < v.docs.length; i++) {
+					const d = v.docs[i];
+					if(!d.removed) {
+						docs += 
+						`
+							<div class="doc">
+								<p>
+									<a target="_blank" href="/download/${d.time}">
+										<img width="20" height="20" src="assets/img/file-pdf.svg" />
+										<span>${d.title}</span>
+									</a>
+									<small>${new Date(parseInt(d.time)).toDateString()}</small>
+								</p>
+								<div class="doc-buttons"></div>
+							</div>
+						`;
 					}
+				}
+			}
 
-					vitrolas += 
-					`
-						<h4>${v.name} - ${v.userOffice}</h4>
-						<div class="vitrola">
-							${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
-						</div>
-					`;
+			vitrolas += 
+			`
+				<h4><p>${v.name} - ${v.userOffice}</p><small>${v._id}</small></h4>
+				<div class="vitrola">
+					${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
+				</div>
+			`;
 
-					document.getElementById('vitrolas').innerHTML = vitrolas;
-				});
+			document.getElementById('vitrolas').innerHTML = vitrolas;
+		});
     }
 
+	document.getElementById('btn-search-vitrola').addEventListener('click', async e => {
+		const id = prompt('Introduza o ID:');
+		if(id != null) {
+			const resp = await fetch(`/vitrola/${id}`);
+			const json = await resp.json();
+
+			if(Object.keys(json).length > 0) {
+				let docs = '';
+
+				if(json.docs.length > 0) {
+					for (let i = 0; i < json.docs.length; i++) {
+						const d = json.docs[i];
+						if(!d.removed) {
+							docs += 
+							`<div class="doc">
+									<p>
+										<a target="_blank" href="/download/${d.time}">
+											<img width="20" height="20" src="assets/img/file-pdf.svg" />
+											<span>${d.title}</span>
+										</a>
+										<small>${new Date(parseInt(d.time)).toDateString()}</small>
+									</p>
+									<div class="doc-buttons">
+									</div>
+								</div>
+							`;
+						}
+					}
+				}
+
+				const vitrola = 
+				`
+					<h4><p>${json.name} - ${json.userOffice}</p><small>${json._id}</small></h4>
+					<div class="vitrola">
+						${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
+					</div>
+				`;
+
+
+				document.getElementById('vitrolas').innerHTML = vitrola;
+			} else {
+				alert(`): Não foi encontrado nenhum mural com o ID: ${id}`);
+			}
+		}
+	});
+
+	document.getElementById('inp-search-vitrola').addEventListener('keyup', async (e) => {
+		const text = e.target.value;
+		const resp = await fetch(`/search/${text}`);
+		const json = await resp.json();
+		console.log(json);
+	});
+	
 </script>
 </html>

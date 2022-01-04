@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/img/m.png">
+    <title>Mural - Download</title>
+</head>
+<body>
+    <main>
+        <div id="container" style="background: #fff; height: calc(100vh - 20px); margin: 0; padding: 0;
+        display: flex; justify-content: center; align-items: center;"
+        >
+        <a id="a-download"
+            href="${data.base64}" download="${data.doc}"
+            style="display: none;
+                padding: 15px; text-decoration: none; color: indigo;
+                background: #2bccb1; color: #fff; font-family: arial;
+                width: 280px; border-radius: 2px; text-align: center;
+            "
+        >
+            Baixar
+        </a>
+        <div>
+    </main>
+    
+</body>
+
+<script>
+    getFile();
+    async function getFile() {
+        const url = new URL(window.location.href);
+        const id = url.pathname.split('/')[2];
+        const resp = await fetch(`/doc/${id}`);
+        const json = await resp.json();
+        console.log(json)
+        
+        if(json.data !== null) {
+            document.getElementById('a-download').style.display = 'block';
+            document.getElementById('a-download').download = json.data.doc;
+            document.getElementById('a-download').href = json.data.base64;
+        } else {}
+    }
+</script>
+</html>

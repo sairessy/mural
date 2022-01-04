@@ -12,7 +12,7 @@
         body {
             padding: 0;
             margin: 0;
-            background-color: #fcfcfc;
+            background-color: #f1f1f1;
         }
 
 		form {
@@ -31,7 +31,8 @@
         }
 
         #header {
-            border-bottom: 1px solid #ddd;
+            /* border-bottom: 1px solid #ddd; */
+			box-shadow: 0 0 4px 4px #eee;
             display: flex;
             align-items: center;
             height: 60px;
@@ -48,6 +49,7 @@
 			display: inline-block;
 			width: 140px;
 			text-align: center;
+			background-color: #fff;
         }
 
         #main {
@@ -58,9 +60,26 @@
             padding: 5px 20px;
         }
 
+		.btn-remove {
+			padding: 2px;
+			/* background-color: darksalmon; */
+			border: 1px solid #ccc;
+			background-color: #aaa;
+			color: #fff;
+			border-radius: 2px;
+			margin-left: 10px;
+			display: flex;
+			align-items: center;
+		}
+
+		.btn-remove i {
+			color: #fff;
+		}
+
 		h4 {
-			background-color: #eee;
-			box-shadow: inset 1px 1px 2px #ddd;
+			background-color: #f9f9f9;
+			display: flex;
+			align-items: center;
 			padding: 10px;
 			border-radius: 5px;
 			text-transform: uppercase;
@@ -72,7 +91,12 @@
 			margin-bottom: 10px;
         }
 
-		.doc i {
+		.doc p {
+			display: flex;
+			align-items: center;
+		}
+
+		.doc p img {
 			margin-right: 10px;
 		}
 
@@ -101,7 +125,7 @@
     <main>
         <section>
             <div id="header">
-                <h1 class="app-title"><img width="40" height="40" src="assets/img/m.png" /><a href="/">MURAL</a></h1>
+                <h1 class="app-title"><img width="30" height="30" src="assets/img/m.png" /><a href="/">MURAL</a></h1>
                 <nav>
                     <!-- <a href="">Editar perfil</a> -->
                     <a href="/logout">Terminar secção</a>
@@ -156,9 +180,12 @@
 							if(!d.removed) {
 								docs += 
 								`<div class="doc">
-										<p><i class="la la-file-pdf"></i><a href="/doc/${d.time}">${d.title}</a></p>
+										<p>
+											<img width="20" height="20" src="assets/img/file-pdf.svg" />
+											<a target="_blank" href="/download/${d.time}">${d.title}</a>
+										</p>
 										<div class="doc-buttons">
-											<button onClick="removeDoc('${d.time}', '${v._id}');"><i class="la la-times"></i>Remover documento</button>
+											<button class="btn-remove" onClick="removeDoc('${d.time}', '${v._id}');">Remover documento</button>
 										</div>
 									</div>
 								`;
@@ -168,15 +195,15 @@
 
 					vitrolas += 
 					`
-						<h4>${v.name} <button onClick="removeVitrola('${v._id}');"><i class="la la-times"></i>Remover mural</button></h4>
-							<form action="#" class="form-add-doc" onSubmit="addDoc('${v.name}', '${v._id}');">
-								<input type="text" placeholder="Título do documento" id="${v._id}-inp-title">
-								<select id="${v._id}-select-doc-type">
-									<option value="">Tipo de documento</option>
-								</select>
-								<input type="file" id="${v._id}-file-doc">
-								<button class="btn-submit">Adicionar documento</button>
-							</form>
+						<h4>${v.name}<button class="btn-remove" onClick="removeVitrola('${v._id}');"><i class="la la-times"></i>Remover mural</button></h4>
+						<form action="#" class="form-add-doc" onSubmit="addDoc('${v.name}', '${v._id}');">
+							<input type="text" placeholder="Título do documento" id="${v._id}-inp-title">
+							<select id="${v._id}-select-doc-type">
+								<option value="">Tipo de documento</option>
+							</select>
+							<input type="file" id="${v._id}-file-doc">
+							<button class="btn-submit">Adicionar documento</button>
+						</form>
 						<div class="vitrola">
 							${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
 						</div>

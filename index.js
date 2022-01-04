@@ -1,7 +1,7 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// import path from 'path';
+// import { fileURLToPath } from 'url';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -21,8 +21,8 @@ const firebaseConfig = {
 // Initialize Firebase
 // const firebase = initializeApp(firebaseConfig);
 
-import Datastore from 'nedb';
-import cookieParser from 'cookie-parser';
+const Datastore = require('nedb');
+const cookieParser = require('cookie-parser');
 const db = {
     users: new Datastore('./src/database/users.db'),
     vitrolas: new Datastore('./src/database/vitrolas.db'),
@@ -33,13 +33,13 @@ db.users.loadDatabase();
 db.vitrolas.loadDatabase();
 db.documents.loadDatabase();
 
-import express from 'express';
+const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json({limit: '1mb'}));
 app.use(cookieParser());
 app.use(express.static('public'));
-app.listen(PORT, () => console.log(PORT));
+app.listen(PORT, () => console.log('PORT: ' + PORT));
 
 app.get('/login', (req, res) => {
     if (req.cookies.user !== undefined) {
@@ -47,6 +47,10 @@ app.get('/login', (req, res) => {
     } else {
         res.sendFile(__dirname + '/public/login.html');
     }    
+});
+
+app.get('/download/:id', (req, res) => {
+    res.sendFile(__dirname + '/public/download.html');
 });
 
 app.get('/signup', (req, res) => {
@@ -111,6 +115,26 @@ app.get('/vitrolas', async (req, res) => {
         }
 
         res.json(data);
+    });
+});
+
+app.get('/vitrola/:id', async (req, res) => {
+    const id = req.params.id;
+
+    db.vitrolas.findOne({removed: false, _id: id}, async (err, data) => {
+        if(data != null) {
+            let  d = data;
+
+            d.userOffice = await new Promise((resolve, reject) => {
+                db.users.findOne({_id: d.user}, (err, dt) => {
+                    resolve(dt.office);
+                });
+            }); 
+            console.log(d)
+            res.json(data);
+        } else {
+            res.json({})
+        }
     });
 });
 
@@ -186,26 +210,12 @@ app.post('/signup', (req, res) => {
 app.get('/doc/:id', (req, res) => {
     const id = req.params.id;
     db.documents.findOne({doc: id}, (err, data) => {
-
-        if(data != null) {
-            res.send(`
-                <div style="background: #fff; height: calc(100vh - 20px); margin: 0; padding: 0;
-                    display: flex; justify-content: center; align-items: center;"
-                >
-                    <a 
-                        href="${data.base64}" download="${data.doc}"
-                        style="
-                            padding: 15px; text-decoration: none; color: indigo;
-                            background: #2bccb1; color: #fff; font-family: arial; display: block;
-                            width: 280px; border-radius: 2px; text-align: center;
-                        "
-                    >
-                        Baixar
-                    </a>
-                <div>
-            `);
-        } else {
-            res.send('File not found');
-        }
+        res.json({data});
     });
+});
+
+app.get('/search/:text', (req, res) => {
+    const text = req.params.text;
+
+   res.json({});
 });

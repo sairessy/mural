@@ -19,8 +19,14 @@
     justify-content: center;
 }
 
+.app-title img {
+    margin-right: 10px;
+    width: 40px;
+}
+
 h1 a {
     font-family: ms;
+    color: #ddd;
 }
 
 * {
@@ -39,8 +45,23 @@ input {
     outline: none;
 }
 
+input[type="submit"], button {
+    cursor: pointer;
+    background-color: #777;
+    color: #fff;
+    border: none;
+}
+
+input[type="submit"]:hover, button:hover {
+    opacity: .9;
+}
+
+input[type="submit"]:active, button:active {
+    opacity: .8;
+}
+
 .btn-submit {
-    background-color: indigo;
+    background-color: #777;;
     color: #fff;
     outline: none;
     border: none;
