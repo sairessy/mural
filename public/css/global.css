@@ -4,11 +4,6 @@
 }
 
 @font-face {
-    font-family: tt;
-    src: url(../assets/fonts/TitanOne-Regular.ttf);
-}
-
-@font-face {
     font-family: ms;
     src: url(../assets/fonts/Montserrat-Black.ttf);
 }

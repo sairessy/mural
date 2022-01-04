@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="assets/img/m.png">
     <title>Mural</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 		<link rel="stylesheet" href="css/global.css">
     <style>
         body {
             padding: 0;
             margin: 0;
-            background-color: #f1f1f1;
+            background-color: #f9f9f9;
         }
 
         section {
@@ -29,7 +29,6 @@
             display: flex;
             align-items: center;
             height: 60px;
-            margin-bottom: 10px;
             padding: 10px;
             justify-content: space-between; 
         }
@@ -43,7 +42,7 @@
 			width: 200px;
 			padding: 12px;
 			margin-left: 10px;
-			background: url(assets/img/search-light.svg) no-repeat 30px center/25px;
+			background: url(assets/img/search-light.svg) no-repeat 15px center/25px;
 			background-color: #777;
 			border: none;
 			font-size: 14px;
@@ -86,9 +85,32 @@
 			padding-left: 40px;
 		}
 
-        #main {
-            padding: 15px 50px;
-        }
+		#banner {
+			background-color: #eee;
+			height: 320px;
+			-moz-box-shadow: inset 10px 10px 50px #000;
+			-webkit-box-shadow: inset 10px 10px 50px #000;
+			box-shadow: inset 10px 10px 50px #000;
+			background: url(assets/img/bn.jpg) no-repeat center center/cover;
+		}
+
+		#banner #banner-cover {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 320px;
+			background: #000000b0;
+		}
+
+		#banner #banner-cover p {
+			text-align: center;
+		}
+
+		#banner #banner-cover p a {
+			color: #fff;
+			font-size: 22px;
+			text-decoration: underline;
+		}
 
         .vitrola {
             padding: 5px 20px;
@@ -113,6 +135,7 @@
 
 		.doc p a span {
 			text-decoration: underline;
+			color: #333;
 		}
 
 		.doc p a {
@@ -131,10 +154,10 @@
 			box-shadow: inset 1px 1px 2px #ddd; */
 			background-color: #f9f9f9;
 			padding: 10px;
-			border-radius: 5px;
 			color: #666;
 			display: flex;
 			align-items: center;
+			margin-top: 10px;
 
 		}
 
@@ -151,6 +174,16 @@
             margin-left: 10px;
         }
 
+		#footer {
+			height: 60px;
+			border-top: 1px solid #ddd;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #666;
+			background-color: #eee;
+		}
+
 		@media screen and (max-width: 414px) {
 			section {
 				width: 100%;
@@ -161,6 +194,7 @@
 				width: fit-content;
 				padding: 12px;
 				margin-left: 10px;
+				background: none;
 				background-color: #777;
 				border: none;
 				border-radius: 5px;
@@ -191,7 +225,7 @@
 					<form action="#" id="form-search">
 						<input type="text" placeholder="Pesquisar" id="inp-search-vitrola">
 					</form>
-					<button id="btn-search-vitrola">Mural</button>
+					<button id="btn-search-vitrola">Pesquisar mural</button>
 				</div>
                 <nav>
                     <a href="/login" id="a-login">Entrar</a>
@@ -199,10 +233,19 @@
             </div>
 
             <div id="main">
+				<div id="banner">
+					<div id="banner-cover">
+						<p><a href="/dashboard">Crie murais virtuais para a sua organização!</a></p>
+					</div>
+				</div>
 				<div id="vitrolas-all">
 					<div id="vitrolas"></div>
 				</div>
             </div> 
+
+			<div id="footer">
+				<p>Mural, inc &copy; 2022</p>
+			</div>
         </section>
     </main>
 </body>

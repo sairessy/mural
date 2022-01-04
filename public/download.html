@@ -5,23 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/assets/img/m.png">
+    <link rel="stylesheet" href="/css/global.css">
     <title>Mural - Download</title>
+    <style>
+        #container {
+            background: #fff; height: calc(100vh - 20px); margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center; padding: 10px;
+        }
+
+        #a-download {
+            display: none;
+            padding: 15px; text-decoration: none; color: indigo;
+            background: #2bccb1; color: #fff;
+            width: 400px; border-radius: 2px; text-align: center;
+        }
+    </style>
 </head>
 <body>
     <main>
-        <div id="container" style="background: #fff; height: calc(100vh - 20px); margin: 0; padding: 0;
-        display: flex; justify-content: center; align-items: center;"
-        >
-        <a id="a-download"
-            href="${data.base64}" download="${data.doc}"
-            style="display: none;
-                padding: 15px; text-decoration: none; color: indigo;
-                background: #2bccb1; color: #fff; font-family: arial;
-                width: 280px; border-radius: 2px; text-align: center;
-            "
-        >
-            Baixar
-        </a>
+        <div id="container">
+            <a id="a-download" href="" download="">Baixar</a>
         <div>
     </main>
     

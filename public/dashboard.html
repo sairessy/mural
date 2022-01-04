@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mural - Dashboard</title>
 	<link rel="icon" href="assets/img/m.png">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 	<link rel="stylesheet" href="css/global.css">
     <style>
         body {
             padding: 0;
             margin: 0;
-            background-color: #f1f1f1;
+            background-color: #f9f9f9;
         }
 
 		form {
@@ -62,14 +62,13 @@
 
 		.btn-remove {
 			padding: 2px;
-			/* background-color: darksalmon; */
-			border: 1px solid #ccc;
-			background-color: #aaa;
+			background-color: brown;
 			color: #fff;
 			border-radius: 2px;
 			margin-left: 10px;
 			display: flex;
 			align-items: center;
+			border: none;
 		}
 
 		.btn-remove i {
@@ -82,7 +81,17 @@
 			align-items: center;
 			padding: 10px;
 			border-radius: 5px;
+			display: flex;
+			align-items: center;
+		}
+
+		h4 p {
 			text-transform: uppercase;
+			margin-right: 10px;
+		}
+
+		h4 small {
+			color: #777;
 		}
 
         .doc {
@@ -195,7 +204,11 @@
 
 					vitrolas += 
 					`
-						<h4>${v.name}<button class="btn-remove" onClick="removeVitrola('${v._id}');"><i class="la la-times"></i>Remover mural</button></h4>
+						<h4>
+							<p>${v.name}</p>
+							<small>${v._id}</small>
+							<button class="btn-remove" onClick="removeVitrola('${v._id}');"><i class="la la-times"></i>Remover mural</button>
+						</h4>
 						<form action="#" class="form-add-doc" onSubmit="addDoc('${v.name}', '${v._id}');">
 							<input type="text" placeholder="Título do documento" id="${v._id}-inp-title">
 							<select id="${v._id}-select-doc-type">
