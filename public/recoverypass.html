@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Mural - Entrar</title>
+		<title>Mural - Recuperar senha</title>
 		<link rel="icon" href="assets/img/m.png" />
 		<link rel="stylesheet" href="css/global.css" />
 		<style>
@@ -29,7 +29,7 @@
 				padding: 15px;
 			}
 
-			.form-login-container {
+			.form-recoverypass-container {
 				height: 100vh;
 				display: flex;
 				align-items: center;
@@ -97,8 +97,8 @@
 		</style>
 	</head>
 	<body>
-		<div class="form-login-container">
-			<form id="form-login">
+		<div class="form-recoverypass-container">
+			<form id="form-recoverypass">
 				<div class="form-header">
 					<h1 class="app-title">
 						<img width="30" height="30" src="assets/img/m.png" /><a href="/"
@@ -108,10 +108,15 @@
 				</div>
 				<div class="form-main">
 					<input type="email" id="inp-email" placeholder="Email" />
-					<input type="password" id="inp-pass" placeholder="Senha" />
-					<input type="submit" value="Entrar" class="btn-submit" />
+					<input type="password" id="inp-pass" placeholder="Nova senha" />
+					<input
+						type="password"
+						id="inp-c-pass"
+						placeholder="Confirmar nova senha"
+					/>
+					<input type="submit" value="Recuperar" class="btn-submit" />
+					<p><a href="/login">Entrar</a></p>
 					<p><a href="/signup">Registar</a></p>
-					<!-- <p><a href="/recoverypass">Recuperar senha</a></p> -->
 					<p><a href="/">Home</a></p>
 				</div>
 			</form>
@@ -120,14 +125,15 @@
 
 	<script>
 		document
-			.getElementById("form-login")
+			.getElementById("form-recoverypass")
 			.addEventListener("submit", async (e) => {
 				e.preventDefault();
 				const email = document.getElementById("inp-email").value;
 				const pass = document.getElementById("inp-pass").value;
-				const data = { email, pass };
+				const cPass = document.getElementById("inp-c-pass").value;
+				const data = { email, pass, cPass };
 
-				const response = await fetch("/login", {
+				const response = await fetch("/sendrecoverycode", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
@@ -138,9 +144,21 @@
 				const json = await response.json();
 
 				if (json.success) {
-					window.location.href = "/dashboard";
+					alert(`Enviamos um código de confirmação para ${data.email}`);
+					const code = prompt("Introduza o código que recebeu:");
+					const rs = await fetch("/recoverypass", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ ...data, code }),
+					});
+
+					const j = await rs.json();
+
+					console.log(j);
 				} else {
-					alert("Usuário ou senha inválida");
+					alert("Houve algum erro, tente novamente!");
 				}
 			});
 	</script>

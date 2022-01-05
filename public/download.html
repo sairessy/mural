@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/img/m.png">
-    <link rel="stylesheet" href="/css/global.css">
-    <title>Mural - Download</title>
-    <style>
-        #container {
-            background: #fff; height: calc(100vh - 20px); margin: 0; padding: 0;
-            display: flex; justify-content: center; align-items: center; padding: 10px;
-        }
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/assets/img/m.png">
+	<link rel="stylesheet" href="/css/global.css">
+	<title>Mural - Download</title>
+	<style>
+		#container {
+			background: #fff; height: calc(100vh - 20px); margin: 0; padding: 0;
+			display: flex; justify-content: center; align-items: center; padding: 10px;
+		}
 
-        #a-download {
-            display: none;
-            padding: 15px; text-decoration: none; color: indigo;
-            background: #2bccb1; color: #fff;
-            width: 400px; border-radius: 2px; text-align: center;
-        }
-    </style>
+		#a-download {
+			display: none;
+			padding: 15px; text-decoration: none; color: indigo;
+			background: #2bccb1; color: #fff;
+			width: 400px; border-radius: 2px; text-align: center;
+		}
+	</style>
 </head>
 <body>
-    <main>
-        <div id="container">
-            <a id="a-download" href="" download="">Baixar</a>
-        <div>
-    </main>
-    
+	<main>
+		<div id="container">
+			<a id="a-download" href="" download="">Baixar</a>
+		<div>
+	</main>
 </body>
 
 <script>
-    getFile();
-    async function getFile() {
-        const url = new URL(window.location.href);
-        const id = url.pathname.split('/')[2];
-        const resp = await fetch(`/doc/${id}`);
-        const json = await resp.json();
-        console.log(json)
-        
-        if(json.data !== null) {
-            document.getElementById('a-download').style.display = 'block';
-            document.getElementById('a-download').download = json.data.doc;
-            document.getElementById('a-download').href = json.data.base64;
-        } else {}
-    }
+	getFile();
+	async function getFile() {
+		const url = new URL(window.location.href);
+		const id = url.pathname.split('/')[2];
+		const resp = await fetch(`/doc/${id}`);
+		const json = await resp.json();
+		
+		if(json.data !== null) {
+			document.getElementById('a-download').style.display = 'block';
+			document.getElementById('a-download').download = json.data.doc;
+			document.getElementById('a-download').href = json.data.base64;
+		} else {}
+	}
 </script>
 </html>

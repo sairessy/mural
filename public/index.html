@@ -1,271 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="assets/img/m.png">
-    <title>Mural</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="assets/img/m.png" />
+		<title>Mural - O seu mural virtual</title>
 		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-		<link rel="stylesheet" href="css/global.css">
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-            background-color: #f9f9f9;
-        }
+		<link rel="stylesheet" href="css/global.css" />
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+				background-color: #f9f9f9;
+			}
 
-        section {
-            background-color: #fff;
-            width: 75%;
-            margin: auto;
-            box-shadow: 0 0 4px 4px #eee;
-            min-height: 100vh;
-        }
-
-        #header {
-			/* box-shadow: inset 0 -1px 1px #ddd; */
-			box-shadow: 0 2px 4px 4px #eee;
-            display: flex;
-            align-items: center;
-            height: 60px;
-            padding: 10px;
-            justify-content: space-between; 
-        }
-
-		#header .search-container {
-			flex: 1;
-			display: flex;
-		}
-
-		#header .search-container button {
-			width: 200px;
-			padding: 12px;
-			margin-left: 10px;
-			background: url(assets/img/search-light.svg) no-repeat 15px center/25px;
-			background-color: #777;
-			border: none;
-			font-size: 14px;
-			border-radius: 5px;
-			color: #fff;
-			cursor: pointer;
-		}
-
-        #header nav a {
-            margin-left: 10px;
-        }
-
-		#a-login {
-			padding: 12px;
-			border: 1px solid #ddd;
-			border-radius: 5px;
-			display: inline-block;
-			width: 140px;
-			text-align: center;
-			background-color: #fff;
-		}
-
-		#form-search {
-			/* display: flex; */
-			display: none;
-		}
-
-		#inp-search-vitrola {
-			display: inline-block;
-			width: 100%;
-			margin-left: 20px;
-			padding: 12px;
-			font-size: 14px;
-			outline: none;
-			bottom: none;
-			border: 1px solid #ddd;
-			background: url(assets/img/search-solid.svg) no-repeat 10px center/20px;
-			background-color: #fff;
-			border-radius: 5px;
-			padding-left: 40px;
-		}
-
-		#banner {
-			background-color: #eee;
-			height: 320px;
-			-moz-box-shadow: inset 10px 10px 50px #000;
-			-webkit-box-shadow: inset 10px 10px 50px #000;
-			box-shadow: inset 10px 10px 50px #000;
-			background: url(assets/img/bn.jpg) no-repeat center center/cover;
-		}
-
-		#banner #banner-cover {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 320px;
-			background: #000000b0;
-		}
-
-		#banner #banner-cover p {
-			text-align: center;
-		}
-
-		#banner #banner-cover p a {
-			color: #fff;
-			font-size: 22px;
-			text-decoration: underline;
-		}
-
-        .vitrola {
-            padding: 5px 20px;
-			margin-bottom: 20px;
-        }
-
-        .doc {
-            display: flex;
-            align-items: center;
-        }
-
-		.doc p {
-			margin-left: 20px;
-			margin-bottom: 20px;
-			display: flex;
-			flex-direction: column;
-		}
-
-		.doc p a img {
-			margin-right: 10px;
-		}
-
-		.doc p a span {
-			text-decoration: underline;
-			color: #333;
-		}
-
-		.doc p a {
-			display: flex;
-			align-items: center;
-			margin-bottom: 10px;
-		}
-
-		.doc p small {
-			color: #777;
-			margin-left: 30px;
-		}
-
-		h4 {
-			/* background-color: #eee;
-			box-shadow: inset 1px 1px 2px #ddd; */
-			background-color: #f9f9f9;
-			padding: 10px;
-			color: #666;
-			display: flex;
-			align-items: center;
-			margin-top: 10px;
-
-		}
-
-		h4 p {
-			text-transform: uppercase;
-		}
-
-		h4 small {
-			margin-left: 10px;
-			color: #999;
-		}
-
-        .doc-buttons {
-            margin-left: 10px;
-        }
-
-		#footer {
-			height: 60px;
-			border-top: 1px solid #ddd;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			color: #666;
-			background-color: #eee;
-		}
-
-		@media screen and (max-width: 414px) {
 			section {
-				width: 100%;
-				box-shadow: none;
+				background-color: #fff;
+				width: 75%;
+				margin: auto;
+				box-shadow: 0 0 4px 4px #eee;
+				min-height: 100vh;
+			}
+
+			#header {
+				/* box-shadow: inset 0 -1px 1px #ddd; */
+				box-shadow: 0 2px 4px 4px #eee;
+				display: flex;
+				align-items: center;
+				height: 40px;
+				padding: 10px;
+				justify-content: space-between;
+				background-color: indigo;
+			}
+
+			#header .search-container {
+				flex: 1;
+				display: flex;
 			}
 
 			#header .search-container button {
-				width: fit-content;
+				width: 200px;
 				padding: 12px;
 				margin-left: 10px;
-				background: none;
-				background-color: #777;
+				background: url(assets/img/search-light.svg) no-repeat 15px center/25px;
+				background-color: #000000;
 				border: none;
+				font-size: 14px;
 				border-radius: 5px;
 				color: #fff;
 				cursor: pointer;
 			}
 
-			#form-search {
-				display: none;
+			#header nav a {
+				margin-left: 10px;
 			}
 
 			#a-login {
-				width: fit-content;
+				padding: 12px;
+				border-radius: 5px;
+				display: inline-block;
+				width: 140px;
+				text-align: center;
+				background-color: #000000;
+				color: #fff;
+			}
+
+			#form-search {
+				/* display: flex; */
+				display: none;
+			}
+
+			#inp-search-vitrola {
+				display: inline-block;
+				width: 100%;
+				margin-left: 20px;
+				padding: 12px;
+				font-size: 14px;
+				outline: none;
+				bottom: none;
+				border: 1px solid #ddd;
+				background: url(assets/img/search-solid.svg) no-repeat 10px center/20px;
+				background-color: #fff;
+				border-radius: 5px;
+				padding-left: 40px;
+			}
+
+			#banner {
+				background-color: #eee;
+				height: 320px;
+				-moz-box-shadow: inset 10px 10px 50px #000;
+				-webkit-box-shadow: inset 10px 10px 50px #000;
+				box-shadow: inset 10px 10px 50px #000;
+				background: url(assets/img/bn.jpg) no-repeat center center/cover;
+			}
+
+			#banner-cover {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				height: 320px;
+				background: #000000b0;
+			}
+
+			#banner #banner-cover p {
+				text-align: center;
+				margin-top: 20px;
+			}
+
+			#banner #banner-cover p a {
+				color: #aaa;
+				font-size: 22px;
+				text-decoration: underline;
 			}
 
 			#main {
-				padding: 10px;
+				min-height: 100vh;
 			}
-		}
-    </style>
-</head>
-<body>
-    <main>
-        <section>
-            <div id="header">
-                <h1 class="app-title"><img width="30" height="30" src="assets/img/m.png" /><a href="/">MURAL</a></h1>
-				<div class="search-container">
-					<form action="#" id="form-search">
-						<input type="text" placeholder="Pesquisar" id="inp-search-vitrola">
-					</form>
-					<button id="btn-search-vitrola">Pesquisar mural</button>
-				</div>
-                <nav>
-                    <a href="/login" id="a-login">Entrar</a>
-                </nav>
-            </div>
 
-            <div id="main">
-				<div id="banner">
-					<div id="banner-cover">
-						<p><a href="/dashboard">Crie murais virtuais para a sua organização!</a></p>
+			#form-filter {
+				width: 90%;
+			}
+
+			#form-filter #inp-org-name {
+				padding: 15px;
+				background-color: #00000094;
+				border-radius: 5px;
+				border: none;
+				display: block;
+				width: 100%;
+				color: #fff;
+				margin: auto;
+				font-size: 18px;
+				transition: all 0.3s ease;
+				opacity: 0.8;
+			}
+
+			#form-filter #inp-org-name:focus {
+				opacity: 1;
+			}
+
+			.vitrola {
+				padding: 5px 20px;
+				margin-bottom: 20px;
+			}
+
+			.doc {
+				display: flex;
+				align-items: center;
+			}
+
+			.doc p {
+				margin-left: 20px;
+				margin-bottom: 20px;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.doc p a img {
+				margin-right: 10px;
+			}
+
+			.doc p a span {
+				text-decoration: underline;
+				color: #333;
+			}
+
+			.doc p a {
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+			}
+
+			.doc p small {
+				color: #777;
+				margin-left: 30px;
+			}
+
+			h4 {
+				/* background-color: #eee;
+			box-shadow: inset 1px 1px 2px #ddd; */
+				background-color: #f9f9f9;
+				padding: 10px;
+				color: #666;
+				display: flex;
+				align-items: center;
+				margin-top: 10px;
+			}
+
+			h4 p {
+				text-transform: uppercase;
+			}
+
+			h4 small {
+				margin-left: 10px;
+				color: #999;
+			}
+
+			h4 button {
+				margin-left: 10px;
+				border-radius: 2px;
+				padding: 2px;
+				background-color: indigo;
+			}
+
+			.doc-buttons {
+				margin-left: 10px;
+			}
+
+			#footer {
+				height: 60px;
+				border-top: 1px solid #ddd;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: #666;
+				background-color: #eee;
+			}
+
+			/* Smartfones */
+			@media screen and (max-width: 414px) {
+				section {
+					width: 100%;
+					box-shadow: none;
+				}
+
+				#header .search-container button {
+					width: fit-content;
+					padding: 12px;
+					margin-left: 10px;
+					background-position: center;
+					background-color: indigo;
+					border: none;
+					border-radius: 5px;
+					color: indigo;
+					cursor: pointer;
+				}
+
+				#form-search {
+					display: none;
+				}
+
+				#a-login {
+					width: fit-content;
+				}
+
+				#banner,
+				#banner-cover {
+					height: 200px;
+				}
+
+				#banner #banner-cover p a {
+					font-size: 14px;
+				}
+			}
+
+			/* Tablets */
+			@media screen and (min-width: 414px) and (max-width: 768px) {
+				section {
+					width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<section>
+				<div id="header">
+					<h1 class="app-title">
+						<img width="30" height="30" src="assets/img/m.png" /><a href="/"
+							>MURAL</a
+						>
+					</h1>
+					<div class="search-container">
+						<form action="#" id="form-search">
+							<input
+								type="text"
+								placeholder="Pesquisar"
+								id="inp-search-vitrola"
+							/>
+						</form>
+						<button id="btn-search-vitrola">Pesquisar</button>
+					</div>
+					<nav>
+						<a href="/login" id="a-login">Entrar</a>
+					</nav>
+				</div>
+
+				<div id="main">
+					<div id="banner">
+						<div id="banner-cover">
+							<form action="#" id="form-filter">
+								<input
+									type="search"
+									id="inp-org-name"
+									placeholder="Nome da organização"
+								/>
+							</form>
+							<p>
+								<a href="/dashboard"
+									>Crie murais virtuais para a sua organização!</a
+								>
+							</p>
+						</div>
+					</div>
+
+					<div id="vitrolas-all">
+						<div id="vitrolas"></div>
 					</div>
 				</div>
-				<div id="vitrolas-all">
-					<div id="vitrolas"></div>
+
+				<div id="footer">
+					<p>Mural, inc &copy; 2022</p>
 				</div>
-            </div> 
+			</section>
+		</main>
+	</body>
 
-			<div id="footer">
-				<p>Mural, inc &copy; 2022</p>
-			</div>
-        </section>
-    </main>
-</body>
+	<script>
+		getVitrolas();
+		async function getVitrolas() {
+			const resp = await fetch("/vitrolas");
+			const json = await resp.json();
+			let vitrolas = "";
 
-<script>
-    getVitrolas();
-    async function getVitrolas() {
-        const resp = await fetch('/vitrolas');
-        const json = await resp.json();
-		let vitrolas = ''
+			json.forEach((v) => {
+				let docs = "";
 
-		json.forEach(v => {
-			let docs = '';
-
-			if(v.docs.length > 0) {
-				for (let i = 0; i < v.docs.length; i++) {
-					const d = v.docs[i];
-					if(!d.removed) {
-						docs += 
-						`
+				if (v.docs.length > 0) {
+					for (let i = 0; i < v.docs.length; i++) {
+						const d = v.docs[i];
+						if (!d.removed) {
+							docs += `
 							<div class="doc">
 								<p>
 									<a target="_blank" href="/download/${d.time}">
@@ -277,37 +344,40 @@
 								<div class="doc-buttons"></div>
 							</div>
 						`;
+						}
 					}
 				}
-			}
 
-			vitrolas += 
-			`
-				<h4><p>${v.name} - ${v.userOffice}</p><small>${v._id}</small></h4>
+				vitrolas += `
+				<h4>
+					<p>${v.name} - ${v.userOffice}</p><small>${v._id}</small>
+					<button onClick="sendNotification('${v._id}');">Activar notificação</button>
+					</h4>
 				<div class="vitrola">
-					${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
+					${docs != "" ? docs : "<p>Nenum documento neste mural</p>"}
 				</div>
 			`;
 
-			document.getElementById('vitrolas').innerHTML = vitrolas;
-		});
-    }
+				document.getElementById("vitrolas").innerHTML = vitrolas;
+			});
+		}
 
-	document.getElementById('btn-search-vitrola').addEventListener('click', async e => {
-		const id = prompt('Introduza o ID:');
-		if(id != null) {
-			const resp = await fetch(`/vitrola/${id}`);
-			const json = await resp.json();
+		document
+			.getElementById("btn-search-vitrola")
+			.addEventListener("click", async (e) => {
+				const id = prompt("Introduza o ID:");
+				if (id != null) {
+					const resp = await fetch(`/vitrola/${id}`);
+					const json = await resp.json();
 
-			if(Object.keys(json).length > 0) {
-				let docs = '';
+					if (Object.keys(json).length > 0) {
+						let docs = "";
 
-				if(json.docs.length > 0) {
-					for (let i = 0; i < json.docs.length; i++) {
-						const d = json.docs[i];
-						if(!d.removed) {
-							docs += 
-							`<div class="doc">
+						if (json.docs.length > 0) {
+							for (let i = 0; i < json.docs.length; i++) {
+								const d = json.docs[i];
+								if (!d.removed) {
+									docs += `<div class="doc">
 									<p>
 										<a target="_blank" href="/download/${d.time}">
 											<img width="20" height="20" src="assets/img/file-pdf.svg" />
@@ -319,32 +389,50 @@
 									</div>
 								</div>
 							`;
+								}
+							}
 						}
-					}
-				}
 
-				const vitrola = 
-				`
+						const vitrola = `
 					<h4><p>${json.name} - ${json.userOffice}</p><small>${json._id}</small></h4>
 					<div class="vitrola">
-						${docs != '' ? docs : '<p>Nenum documento neste mural</p>'}
+						${docs != "" ? docs : "<p>Nenum documento neste mural</p>"}
 					</div>
 				`;
 
+						document.getElementById("vitrolas").innerHTML = vitrola;
+					} else {
+						alert(`): Não foi encontrado nenhum mural com o ID: ${id}`);
+					}
+				}
+			});
 
-				document.getElementById('vitrolas').innerHTML = vitrola;
-			} else {
-				alert(`): Não foi encontrado nenhum mural com o ID: ${id}`);
+		document
+			.getElementById("inp-search-vitrola")
+			.addEventListener("keyup", async (e) => {
+				const text = e.target.value;
+				const resp = await fetch(`/search/${text}`);
+				const json = await resp.json();
+				console.log(json);
+			});
+
+		async function sendNotification(vitrola) {
+			const email = prompt("Seu email:");
+
+			const data = { email, vitrola };
+
+			if (email != null) {
+				const response = await fetch("/addsubscription", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(data),
+				});
+
+				const json = await response.json();
+				console.log(json);
 			}
 		}
-	});
-
-	document.getElementById('inp-search-vitrola').addEventListener('keyup', async (e) => {
-		const text = e.target.value;
-		const resp = await fetch(`/search/${text}`);
-		const json = await resp.json();
-		console.log(json);
-	});
-	
-</script>
+	</script>
 </html>
