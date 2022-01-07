@@ -52,7 +52,7 @@
 			}
 
 			.form-main {
-				padding: 10px;
+				padding: 15px;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
@@ -107,12 +107,18 @@
 					</h1>
 				</div>
 				<div class="form-main">
-					<input type="email" id="inp-email" placeholder="Email" />
-					<input type="password" id="inp-pass" placeholder="Nova senha" />
+					<input type="email" id="inp-email" placeholder="Email" required />
+					<input
+						type="password"
+						id="inp-pass"
+						placeholder="Nova senha"
+						required
+					/>
 					<input
 						type="password"
 						id="inp-c-pass"
 						placeholder="Confirmar nova senha"
+						required
 					/>
 					<input type="submit" value="Recuperar" class="btn-submit" />
 					<p><a href="/login">Entrar</a></p>

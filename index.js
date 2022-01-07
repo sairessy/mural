@@ -1,4 +1,4 @@
-// import path from 'path';
+﻿// import path from 'path';
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -19,7 +19,7 @@ db.subscribers.loadDatabase();
 
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
 app.use(express.static("public"));
@@ -82,15 +82,12 @@ app.post("/addvitrola", (req, res) => {
 
 app.post("/adddoc", (req, res) => {
 	const data = req.body;
-
-	// db.vitrolas.update({ _id: data.vitrolaId }, {
-	//     $set: {
-	//         docs: [{...data, time: Date.now().toString()}]
-	//     }
-	// }, { multi: true }, function (err, numReplaced) {
-	//     // console.log(numReplaced)
-	// });
 	const time = Date.now().toString();
+
+	db.documents.insert({ doc: time, base64: data.file.base64 });
+
+	data.file.base64 = null;
+
 	const newDoc = {
 		...data,
 		time,
@@ -105,8 +102,6 @@ app.post("/adddoc", (req, res) => {
 			// Now the fruits array is ['apple', 'orange', 'pear', 'banana']
 		}
 	);
-
-	db.documents.insert({ doc: time, base64: data.file.base64 });
 
 	db.subscribers.find({ vitrola: data.vitrolaId }, (err, sbs) => {
 		if (sbs.length > 0) {
@@ -239,7 +234,18 @@ app.get("/doc/:id", (req, res) => {
 
 app.get("/search/:text", (req, res) => {
 	const text = req.params.text;
-	res.json({});
+	db.users.find({ office: text }, (err, users) => {
+		console.log(users);
+		if (users.length > 0) {
+			users.forEach((user) => {
+				db.vitrolas.find({ user: user._id }, (err, vitrolas) => {
+					res.json({ data: vitrolas });
+				});
+			});
+		} else {
+			res.json({});
+		}
+	});
 });
 
 app.post("/sendrecoverycode", (req, res) => {
