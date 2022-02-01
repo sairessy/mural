@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="/assets/img/m.png">
 	<link rel="stylesheet" href="/css/global.css">
-	<title>Mural - Download</title>
+	<title>Mural - QRCode</title>
 	<style>
 		#container {
 			background: #fff; height: calc(100vh - 20px); margin: 0; padding: 0;
@@ -24,7 +24,7 @@
 <body>
 	<main>
 		<div id="container">
-			<a id="a-download" href="" download="">Baixar</a>
+			<img id="img" src="" width="400" height="400"  alt="qrcode">
 		<div>
 	</main>
 </body>
@@ -34,13 +34,11 @@
 	async function getFile() {
 		const url = new URL(window.location.href);
 		const id = url.pathname.split('/')[2];
-		const resp = await fetch(`/download/doc/${id}`);
+		const resp = await fetch(`/download/qrcode/${id}`);
 		const json = await resp.json();
 		
 		if(json.data !== null) {
-			document.getElementById('a-download').style.display = 'block';
-			document.getElementById('a-download').download = json.data.doc;
-			document.getElementById('a-download').href = json.data.base64;
+			document.getElementById('img').src = json.data.url;
 		} else {}
 	}
 </script>

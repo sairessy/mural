@@ -74,7 +74,7 @@
 			}
 
 			.btn-remove {
-				padding: 2px;
+				padding: 4px;
 				background-color: brown;
 				color: #fff;
 				border-radius: 2px;
@@ -89,7 +89,7 @@
 			}
 
 			h4 {
-				background-color: #f9f9f9;
+				background-color: #eee;
 				display: flex;
 				align-items: center;
 				padding: 10px;
@@ -98,13 +98,32 @@
 				align-items: center;
 			}
 
+			h4 a {
+				display: flex;
+				align-items: center;
+			}
+
 			h4 p {
 				text-transform: uppercase;
 				margin-right: 10px;
+				margin-left: 10px;
 			}
 
 			h4 small {
 				color: #777;
+			}
+
+			h4 #btn-copy-link {
+				margin-left: 10px;
+				border-radius: 3px;
+				padding: 4px;
+				background-color: #000;
+				display: flex;
+				align-items: center;
+			}
+
+			#btn-copy-link img {
+				margin-right: 5px;
 			}
 
 			.doc {
@@ -118,12 +137,8 @@
 				align-items: center;
 			}
 
-			.doc p img {
-				margin-right: 10px;
-			}
-
 			.doc-buttons {
-				margin-left: 10px;
+				margin-right: 10px;
 			}
 
 			/*  */
@@ -179,6 +194,7 @@
 		</main>
 	</body>
 
+	<script src="js/config.js"></script>
 	<script>
 		document
 			.getElementById("form-add-vitrola")
@@ -217,11 +233,12 @@
 								docs += `<div class="doc">
 									<p>
 										<img width="20" height="20" src="assets/img/file-pdf.svg" />
+										<div class="doc-buttons">
+											<button class="btn-remove" onClick="removeDoc('${d.time}', '${v._id}');">Remover documento</button>
+										</div>
 										<a target="_blank" href="/download/${d.time}">${d.title}</a>
 									</p>
-									<div class="doc-buttons">
-										<button class="btn-remove" onClick="removeDoc('${d.time}', '${v._id}');">Remover documento</button>
-									</div>
+
 								</div>
 							`;
 							}
@@ -230,11 +247,17 @@
 
 					vitrolas += `
 					<h4>
-						<p>${v.name}</p>
-						<small>${v._id}</small>
+						<a href="/qrcode/${v._id}" target="_blank">
+							<img width="25" height="25" src="assets/img/qrcode-black.svg" />
+						</a>
+						<button id="btn-copy-link" onClick="copyLink('${v._id}');">
+						<img width="15" height="15" src="assets/img/copy.svg" />
+						<span>Copiar link</span>
+					</button>
 						<button class="btn-remove" onClick="removeVitrola('${
 							v._id
 						}');"><i class="la la-times"></i>Remover mural</button>
+						<p>${v.name}</p>
 					</h4>
 					<form action="#" class="form-add-doc" onSubmit="addDoc('${v.name}', '${
 						v._id
@@ -334,6 +357,10 @@
 			const json = await response.json();
 			console.log(json);
 			window.location.href = "/dashboard";
+		}
+
+		async function copyLink(id) {
+			alert(CONFIG.site + "/mural/" + id);
 		}
 	</script>
 </html>

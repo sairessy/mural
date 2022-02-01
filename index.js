@@ -2,20 +2,24 @@
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
-
+const CONFIG = require("./src/config");
 const Datastore = require("nedb");
 const cookieParser = require("cookie-parser");
+const QRCode = require("qrcode");
+
 const db = {
 	users: new Datastore("./src/database/users.db"),
 	vitrolas: new Datastore("./src/database/vitrolas.db"),
 	documents: new Datastore("./src/database/documents.db"),
 	subscribers: new Datastore("./src/database/subscribers.db"),
+	qrcodes: new Datastore("./src/database/qrcodes.db"),
 };
 
 db.users.loadDatabase();
 db.vitrolas.loadDatabase();
 db.documents.loadDatabase();
 db.subscribers.loadDatabase();
+db.qrcodes.loadDatabase();
 
 const express = require("express");
 const app = express();
@@ -65,8 +69,17 @@ app.get("/dashboard", (req, res) => {
 	}
 });
 
+app.get("/qrcode/:id", (req, res) => {
+	res.sendFile(__dirname + "/public/qrcode.html");
+});
+
+app.get("/mural/:id", (req, res) => {
+	res.sendFile(__dirname + "/public/vitrola.html");
+});
+
 app.post("/addvitrola", (req, res) => {
 	const data = req.body;
+
 	db.vitrolas.insert(
 		{
 			...data,
@@ -75,7 +88,11 @@ app.post("/addvitrola", (req, res) => {
 			user: req.cookies.user,
 			removed: false,
 		},
-		(err, doc) => {}
+		(err, doc) => {
+			QRCode.toDataURL(CONFIG.site + "/mural/" + doc._id, function (err, url) {
+				db.qrcodes.insert({ url, vitrola: doc._id });
+			});
+		}
 	);
 	res.json({ success: true });
 });
@@ -225,9 +242,16 @@ app.post("/signup", (req, res) => {
 	res.json({});
 });
 
-app.get("/doc/:id", (req, res) => {
+app.get("/download/doc/:id", (req, res) => {
 	const id = req.params.id;
 	db.documents.findOne({ doc: id }, (err, data) => {
+		res.json({ data });
+	});
+});
+
+app.get("/download/qrcode/:id", (req, res) => {
+	const id = req.params.id;
+	db.qrcodes.findOne({ vitrola: id }, (err, data) => {
 		res.json({ data });
 	});
 });
@@ -301,4 +325,12 @@ app.post("/addsubscription", (req, res) => {
 	);
 
 	res.json({});
+});
+
+app.post("/scanqr", (req, res) => {
+	const data = req.body;
+
+	db.qrcodes.findOne({ url: data.url }, (err, data) => {
+		res.json({ vitrolaId: data != null ? data.vitrola : null });
+	});
 });

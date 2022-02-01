@@ -4,10 +4,10 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" href="assets/img/m.png" />
+		<link rel="icon" href="/assets/img/m.png" />
 		<title>Mural - O seu mural virtual</title>
 		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-		<link rel="stylesheet" href="css/global.css" />
+		<link rel="stylesheet" href="/css/global.css" />
 		<style>
 			body {
 				padding: 0;
@@ -32,8 +32,7 @@
 				padding: 10px;
 				justify-content: space-between;
 				background-color: #ffffff;
-				/* border-top: 15px solid #2bccb144; */
-				border-top: 15px solid #f9f9f9;
+				border-top: 15px solid #000;
 			}
 
 			#header .search-container {
@@ -45,7 +44,7 @@
 				width: 240px;
 				padding: 12px;
 				margin-left: 10px;
-				background: url(assets/img/search-light.svg) no-repeat 15px center/25px;
+				background: url(/assets/img/search-light.svg) no-repeat 15px center/25px;
 				background-color: #000000;
 				border: none;
 				font-size: 14px;
@@ -72,7 +71,7 @@
 
 			#a-login {
 				padding: 10px;
-				border-radius: 3px;
+				border-radius: 5px;
 				display: inline-block;
 				width: 140px;
 				text-align: center;
@@ -93,7 +92,7 @@
 				outline: none;
 				bottom: none;
 				border: 1px solid #ddd;
-				background: url(assets/img/search-solid.svg) no-repeat 10px center/20px;
+				background: url(/assets/img/search-solid.svg) no-repeat 10px center/20px;
 				background-color: #fff;
 				border-radius: 5px;
 				padding-left: 40px;
@@ -105,7 +104,8 @@
 				-moz-box-shadow: inset 10px 10px 50px #000;
 				-webkit-box-shadow: inset 10px 10px 50px #000;
 				box-shadow: inset 10px 10px 50px #000;
-				background: url(assets/img/bn.jpg) no-repeat center center/cover;
+				background: url(/assets/img/bn.jpg) no-repeat center center/cover;
+				display: none;
 			}
 
 			#banner-cover {
@@ -121,33 +121,21 @@
 			#banner-cover .contact {
 				display: flex;
 				position: absolute;
-				bottom: -20px;
-				right: 10px;
+				top: 0;
+				right: 0;
+				margin: 10px;
 			}
 
 			.contact a {
-				display: flex;
-				align-items: center;
-				padding: 0 5px;
+				padding: 5px;
 				border-radius: 3px;
-				border-radius: 10px;
-				background-color: #2bccb1;
-				color: #fff;
+				background-color: #000000;
 				margin-left: 10px;
 			}
 
 			.contact img {
-				border-right: 1px dashed #000;
 				width: 25px;
 				height: 25px;
-				padding-right: 5px;
-				margin-right: 5px;
-				padding: 10px;
-			}
-			.contact span {
-				width: 120px;
-				text-align: center;
-				
 			}
 
 			#banner #banner-cover p {
@@ -167,7 +155,6 @@
 
 			#form-filter {
 				width: 90%;
-				display: none;
 			}
 
 			#form-filter #inp-org-name {
@@ -240,7 +227,6 @@
 				display: flex;
 				align-items: center;
 				margin: 10px;
-				margin-top: 25px;
 			}
 
 			h4 p {
@@ -324,36 +310,15 @@
 
 				#banner,
 				#banner-cover {
-					height: 160px;
+					height: 200px;
 				}
 
 				#banner #banner-cover p a {
 					font-size: 14px;
 				}
-				
-				#banner-cover .contact {
-					 left: 0;
-					border-radius: 1px;
-				}
-				
-				#banner-cover .contact a {
-					border-radius: 5px;
-				}
-
-				
-
-			.contact img {
-				padding: 5px;
-			}
-			.contact span {
-				width: auto;
-				text-align: center;
-				
-			}
 
 				h4 {
 					flex-wrap: wrap;
-					margin-top: 25px;
 				}
 
 				h4 button {
@@ -400,7 +365,7 @@
 			<section>
 				<div id="header">
 					<h1 class="app-title">
-						<img width="30" height="30" src="assets/img/m.png" /><a href="/"
+						<img width="30" height="30" src="/assets/img/m.png" /><a href="/"
 							>MURAL</a
 						>
 					</h1>
@@ -426,10 +391,11 @@
 					<div id="banner">
 						<div id="banner-cover">
 							<div class="contact">
+								<a href="#"><img src="/assets/img/at-solid.svg" /></a>
 								<a href="https://wa.me/+258847460853"
-									><img src="assets/img/whatsapp.svg" />
-									<span>Contacte-nos</span>
-								</a>
+									><img src="/assets/img/whatsapp.svg"
+								/></a>
+								<a href="#"><img src="/assets/img/facebook-messenger.svg" /></a>
 							</div>
 							<form action="#" id="form-filter">
 								<input
@@ -460,88 +426,45 @@
 
 	<script src="js/config.js"></script>
 	<script>
-		getVitrolas();
-		async function getVitrolas() {
-			const resp = await fetch("/vitrolas");
+		getVitrola();
+		async function getVitrola() {
+			const url = new URL(window.location.href);
+			const id = url.pathname.split("/")[2];
+			const resp = await fetch("/vitrola/" + id);
 			const json = await resp.json();
-			let vitrolas = "";
+			console.log(json);
+			let docs = "";
 
-			json.forEach((v) => {
-				let docs = "";
-
-				if (v.docs.length > 0) {
-					for (let i = 0; i < v.docs.length; i++) {
-						const d = v.docs[i];
-						if (!d.removed) {
-							docs += `
-							<div class="doc">
-								<p>
-									<a target="_blank" href="/download/${d.time}">
-										<img width="20" height="20" src="assets/img/file-pdf.svg" />
-										<span>${d.title}</span>
-									</a>
-									<small>${new Date(parseInt(d.time)).toDateString()}</small>
-								</p>
-								<div class="doc-buttons"></div>
-							</div>
-						`;
-						}
+			if (json.docs.length > 0) {
+				for (let i = 0; i < json.docs.length; i++) {
+					const d = json.docs[i];
+					if (!d.removed) {
+						docs += `<div class="doc">
+									<p>
+										<a target="_blank" href="/download/${d.time}">
+											<img width="20" height="20" src="/assets/img/file-pdf.svg" />
+											<span>${d.title}</span>
+										</a>
+										<small>${new Date(parseInt(d.time)).toDateString()}</small>
+									</p>
+									<div class="doc-buttons">
+									</div>
+								</div>
+							`;
 					}
 				}
-
-				vitrolas += `
-				<h4>
-					<!--<button onClick="sendNotification('${v._id}');">
-						<img width="15" height="15" src="assets/img/bell.svg" />
-						<span>Notificar-me</span>
-					</button>-->
-					<button id="btn-copy-link" onClick="copyLink('${v._id}');">
-						<img width="15" height="15" src="assets/img/copy.svg" />
-						<span>Copiar link</span>
-					</button>
-					<p>${v.name} &ast; ${v.userOffice}</p>
-				</h4>
-				<div class="vitrola">
-					${docs != "" ? docs : "<p class='p-no-docs'>Nenhum documento neste mural</p>"}
-				</div>
-			`;
-
-				document.getElementById("vitrolas").innerHTML = vitrolas;
-			});
-		}
-
-		document
-			.getElementById("inp-org-name")
-			.addEventListener("keyup", async (e) => {
-				const text = e.target.value;
-				if (text != "") {
-					const resp = await fetch(`/search/${text}`);
-					const json = await resp.json();
-					console.log(json);
-				}
-			});
-
-		async function sendNotification(vitrola) {
-			const email = prompt("Seu email:");
-
-			const data = { email, vitrola };
-
-			if (email != null) {
-				const response = await fetch("/addsubscription", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(data),
-				});
-
-				const json = await response.json();
-				console.log(json);
 			}
-		}
 
-		async function copyLink(id) {
-			alert(CONFIG.site + "/mural/" + id);
+			const vitrola = `
+						<h4>
+							<p>${json.name} &ast; ${json.userOffice}</p>
+						</h4>
+					<div class="vitrola">
+						${docs != "" ? docs : "<p class='p-no-docs'>Nenhum documento neste mural</p>"}
+					</div>
+				`;
+
+			document.getElementById("vitrolas").innerHTML = vitrola;
 		}
 	</script>
 </html>
