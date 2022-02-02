@@ -24,15 +24,13 @@
 			}
 
 			#header {
-				border-bottom: 1px solid #ddd;
 				box-shadow: 0 2px 4px 4px #eee;
 				display: flex;
 				align-items: center;
-				height: 30px;
+				height: 40px;
 				padding: 10px;
 				justify-content: space-between;
 				background-color: #ffffff;
-				border-top: 15px solid #000;
 			}
 
 			#header .search-container {
@@ -69,14 +67,26 @@
 				margin-left: 10px;
 			}
 
-			#a-login {
-				padding: 10px;
+			#btn-notify {
+				padding: 15px;
 				border-radius: 5px;
-				display: inline-block;
-				width: 140px;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
 				text-align: center;
-				border: 1px solid #000;
+				border: none;
+				background: none;
+				box-shadow: 0px 0px 0px 1px #eee;
 				color: #000;
+				width: 170px;
+			}
+
+			#btn-notify img {
+				margin-right: 5px;
+			}
+
+			#btn-notify span {
+				font-size: 16px;
 			}
 
 			#form-search {
@@ -218,8 +228,6 @@
 			}
 
 			h4 {
-				/* background-color: #eee;
-			box-shadow: inset 1px 1px 2px #ddd; */
 				background-color: #f9f9f9;
 				border-radius: 5px;
 				padding: 10px;
@@ -274,8 +282,8 @@
 			/* Smartfones */
 			@media screen and (max-width: 414px) {
 				#header {
-					height: 20px;
 					border-top: 0;
+					height: 30px;
 				}
 
 				section {
@@ -303,9 +311,18 @@
 					display: none;
 				}
 
-				#a-login {
-					padding: 5px;
-					width: 70px;
+				#btn-notify {
+					padding: 10px;
+					width: auto;
+				}
+
+				#btn-notify img {
+					margin: 0;
+					padding: 0;
+				}
+
+				#btn-notify span {
+					font-size: 12px;
 				}
 
 				#banner,
@@ -383,7 +400,15 @@
 						<button id="btn-scanqr"></button>
 					</div>
 					<nav>
-						<a href="/login" id="a-login">Entrar</a>
+						<button id="btn-notify">
+							<img
+								src="/assets/img/bell-black.svg"
+								width="20"
+								height="20"
+								alt="bell"
+							/>
+							<span>Actualizar-me</span>
+						</button>
 					</nav>
 				</div>
 
@@ -432,7 +457,6 @@
 			const id = url.pathname.split("/")[2];
 			const resp = await fetch("/vitrola/" + id);
 			const json = await resp.json();
-			console.log(json);
 			let docs = "";
 
 			if (json.docs.length > 0) {
@@ -466,5 +490,33 @@
 
 			document.getElementById("vitrolas").innerHTML = vitrola;
 		}
+
+		async function activeNotification() {
+			const email = prompt("Seu email:");
+			const url = new URL(window.location.href);
+			const vitrola = url.pathname.split("/")[2];
+
+			const data = { email, vitrola };
+
+			if (email != null) {
+				const response = await fetch("/addsubscription", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(data),
+				});
+
+				const json = await response.json();
+				// console.log(json);
+				alert(
+					"Sucesso! Será notificado sempre que o mural for actulizado, cancelá por um link do email que for enviado."
+				);
+			}
+		}
+
+		document.getElementById("btn-notify").addEventListener("click", () => {
+			activeNotification();
+		});
 	</script>
 </html>

@@ -69,6 +69,10 @@ app.get("/dashboard", (req, res) => {
 	}
 });
 
+app.get("/checkauth", (req, res) => {
+	res.json({ auth: req.cookies.user !== undefined });
+});
+
 app.get("/qrcode/:id", (req, res) => {
 	res.sendFile(__dirname + "/public/qrcode.html");
 });
@@ -321,10 +325,10 @@ app.post("/addsubscription", (req, res) => {
 			if (subscriber == null) {
 				db.subscribers.insert({ email: data.email, vitrola: data.vitrola });
 			}
+
+			res.json({ alredySubscribed: subscriber != null });
 		}
 	);
-
-	res.json({});
 });
 
 app.post("/scanqr", (req, res) => {

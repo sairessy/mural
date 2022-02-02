@@ -1,3 +1,4 @@
 const CONFIG = {
-	site: "https://muralvirtual.ml",
+	// site: "https://muralvirtual.ml",
+	site: "localhost",
 };

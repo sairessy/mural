@@ -1,5 +1,6 @@
 const CONFIG = {
 	site: "https://muralvirtual.ml",
+	site: "http://localhost",
 	docsExtensions: [
 		{ id: "", value: "", icon: "" },
 		{ id: 0, value: "doc", icon: "" },

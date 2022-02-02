@@ -4,10 +4,10 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" href="assets/img/m.png" />
+		<link rel="icon" href="/assets/img/m.png" />
 		<title>Mural - O seu mural virtual</title>
 		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-		<link rel="stylesheet" href="css/global.css" />
+		<link rel="stylesheet" href="/css/global.css" />
 		<style>
 			body {
 				padding: 0;
@@ -32,8 +32,7 @@
 				padding: 10px;
 				justify-content: space-between;
 				background-color: #ffffff;
-				/* border-top: 15px solid #2bccb144; */
-				border-top: 15px solid #f9f9f9;
+				border-top: 15px solid #000;
 			}
 
 			#header .search-container {
@@ -76,7 +75,7 @@
 				display: inline-block;
 				width: 140px;
 				text-align: center;
-				border: 1px solid #000;
+				box-shadow: 0 0 1px 1px #ddd;
 				color: #000;
 			}
 
@@ -129,8 +128,8 @@
 				display: flex;
 				align-items: center;
 				padding: 0 5px;
-				border-radius: 3px;
-				border-radius: 10px;
+				border-radius: 5px;
+				border-radius: 4px;
 				background-color: #2bccb1;
 				color: #fff;
 				margin-left: 10px;
@@ -147,7 +146,6 @@
 			.contact span {
 				width: 120px;
 				text-align: center;
-				
 			}
 
 			#banner #banner-cover p {
@@ -330,26 +328,23 @@
 				#banner #banner-cover p a {
 					font-size: 14px;
 				}
-				
+
 				#banner-cover .contact {
-					 left: 0;
+					left: 0;
 					border-radius: 1px;
 				}
-				
+
 				#banner-cover .contact a {
 					border-radius: 5px;
 				}
 
-				
-
-			.contact img {
-				padding: 5px;
-			}
-			.contact span {
-				width: auto;
-				text-align: center;
-				
-			}
+				.contact img {
+					padding: 5px;
+				}
+				.contact span {
+					width: auto;
+					text-align: center;
+				}
 
 				h4 {
 					flex-wrap: wrap;
@@ -418,7 +413,7 @@
 						<button id="btn-scanqr"></button>
 					</div>
 					<nav>
-						<a href="/login" id="a-login">Entrar</a>
+						<a href="/login" id="a-login">Criar</a>
 					</nav>
 				</div>
 
@@ -543,5 +538,7 @@
 		async function copyLink(id) {
 			alert(CONFIG.site + "/mural/" + id);
 		}
+
+		document.getElementById("btn-scanqr").addEventListener("click", () => {});
 	</script>
 </html>
