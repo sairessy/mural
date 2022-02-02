@@ -15,6 +15,31 @@
 				background-color: #eee;
 			}
 
+			#scanner {
+				position: fixed;
+				background-color: #fff;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100vh;
+				/* display: flex; */
+				/* flex-direction: column;
+				justify-content: center; */
+				z-index: 5;
+				display: none;
+			}
+
+			#scanner button {
+				position: absolute;
+				margin: 0;
+				margin-bottom: 10px;
+				padding: 5px;
+				color: #000;
+				background-color: #ddd;
+				display: inline-block;
+				width: calc(100% - 0px);
+			}
+
 			section {
 				background-color: #fff;
 				width: 75%;
@@ -450,10 +475,13 @@
 				<div id="footer">
 					<p>Mural, inc &copy; 2022</p>
 				</div>
-
-				<div id="reader"></div>
 			</section>
 		</main>
+
+		<div id="scanner">
+			<button id="btn-close-scanner">Fechar</button>
+			<div id="reader"></div>
+		</div>
 	</body>
 
 	<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
@@ -544,6 +572,7 @@
 		}
 
 		document.getElementById("btn-scanqr").addEventListener("click", () => {
+			document.getElementById("scanner").style.display = "flex";
 			const onScanSuccess = (decodedText, decodedResult) => {
 				// handle the scanned code as you like, for example:
 				console.log(`Code matched = ${decodedText}`, decodedResult);
@@ -562,5 +591,11 @@
 			);
 			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 		});
+
+		document
+			.getElementById("btn-close-scanner")
+			.addEventListener("click", (e) => {
+				document.getElementById("scanner").style.display = "none";
+			});
 	</script>
 </html>
